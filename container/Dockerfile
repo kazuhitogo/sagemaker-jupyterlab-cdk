@@ -14,6 +14,6 @@ RUN useradd --create-home --shell /bin/bash --gid "${NB_GID}" --uid ${NB_UID} ${
 USER ${NB_UID}
 
 CMD jupyter lab --ip 0.0.0.0 --port 8888 \
-  --ServerApp.base_url="/jupyterlab/default" \
-  --ServerApp.token='' \
-  --ServerApp.allow_origin='*'
+    --ServerApp.base_url="/jupyterlab/default" \
+    --ServerApp.token='' \
+    --ServerApp.allow_origin='*'

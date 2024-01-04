@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/sagemaker-jupyterlab-cdk.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/sagemaker-jupyter-lab-byoc.ts",
   "watch": {
     "include": [
       "**"
@@ -17,10 +17,11 @@
     ]
   },
   "context": {
-    "repositoryName" : "vanilla-python-cdk",
-    "versionTag" : "latest",
-    "domainId" : "d-qo9y54ilbfte",
-    "imageName" : "vanilla-python-cdk",
+    "repositoryName": "sagemaker-self-managed-image",
+    "versionTag": "latest",
+    "domainId": "d-qo9y54ilbfte",
+    "imageName": "sagemaker-self-managed-image",
+    "imageDisplayName": "3.10.13-bullseye",
     "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
     "@aws-cdk/core:checkSecretUsage": true,
     "@aws-cdk/core:target-partitions": [
