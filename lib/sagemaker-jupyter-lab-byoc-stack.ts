@@ -18,15 +18,32 @@ export class SagemakerJupyterLabCdkStack extends Stack {
         const sagemakerRole = new iam.Role(this, "SagemakerRole", {
             assumedBy: new iam.ServicePrincipal("sagemaker.amazonaws.com"),
             managedPolicies: [
-                iam.ManagedPolicy.fromAwsManagedPolicyName("AdministratorAccess"),
+                iam.ManagedPolicy.fromAwsManagedPolicyName("AmazonSageMakerFullAccess"),
             ],
         });
+
 
         const customResourceRole = new iam.Role(this, "CustomResourceRole", {
             assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
             managedPolicies: [
-                iam.ManagedPolicy.fromAwsManagedPolicyName("AdministratorAccess"),
+                iam.ManagedPolicy.fromAwsManagedPolicyName("AWSLambda_FullAccess"),
             ],
+            inlinePolicies: {
+                'sm-domain-action' : new iam.PolicyDocument({
+                    statements: [
+                        new iam.PolicyStatement({
+                            effect: iam.Effect.ALLOW,
+                            actions: [
+                                'sagemaker:UpdateDomain',
+                                'sagemaker:CreateAppImageConfig'
+                            ],
+                            resources: [
+                                '*'
+                            ]
+                        })
+                    ]
+                })
+            }
         });
 
         const cfnImage = new sagemaker.CfnImage(this, `CfnImage`, {
