@@ -1,15 +1,26 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import {App, Tags} from 'aws-cdk-lib';
-import { SagemakerEcrImage } from '../lib/sagemaker-ecr-image';
-import { SagemakerJupyterlabCdkStack } from '../lib/sagemaker-jupyterlab-cdk-stack';
+import { SagemakerSelfManagedImage } from '../lib/sagemaker-self-managed-Image';
+import { SagemakerJupyterLabCdkStack } from '../lib/sagemaker-jupyterlab-cdk-stack';
 
 const app = new App();
-const sagemakerEcrImage = new SagemakerEcrImage(app, `SageMakerEcrImage`,{});
 
-const sagemakerJupyterlabCdkStack = new SagemakerJupyterlabCdkStack(app, 'SagemakerJupyterlabCdkStack', {
-  imageUri: sagemakerEcrImage.imageUri
+const repositoryName: string = app.node.tryGetContext('repositoryName');
+const versionTag: string = app.node.tryGetContext('versionTag');
+const domainId: string = app.node.tryGetContext('domainId');
+const imageName: string = app.node.tryGetContext('imageName');
+
+const sagemakerSelfManagedImage = new SagemakerSelfManagedImage(app, `SagemakerSelfManagedImage`,{
+  repositoryName: repositoryName,
+  versionTag: versionTag
 });
-sagemakerJupyterlabCdkStack.addDependency(sagemakerEcrImage);
 
-Tags.of(app).add("stack", "SagemakerJupyterlabCdkStack");
+const sagemakerJupyterLabCdkStack = new SagemakerJupyterLabCdkStack(app, 'SagemakerJupyterLabCdkStack', {
+  imageUri: sagemakerSelfManagedImage.imageUri,
+  domainId: domainId,
+  imageName: imageName
+});
+sagemakerJupyterLabCdkStack.addDependency(sagemakerSelfManagedImage);
+
+Tags.of(app).add("stack", "SagemakerJupyterLabCdkStack");

@@ -17,6 +17,10 @@
     ]
   },
   "context": {
+    "repositoryName" : "vanilla-python-cdk",
+    "versionTag" : "latest",
+    "domainId" : "d-qo9y54ilbfte",
+    "imageName" : "vanilla-python-cdk",
     "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
     "@aws-cdk/core:checkSecretUsage": true,
     "@aws-cdk/core:target-partitions": [

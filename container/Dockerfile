@@ -1,7 +1,7 @@
-FROM python:3.10.10-buster
+FROM public.ecr.aws/docker/library/python:3.10.13-bullseye
 
-COPY ./requirements.txt /root/requirements.txt
-COPY ./Dockerfile /root/Dockerfile
+COPY requirements.txt /root/requirements.txt
+COPY Dockerfile /root/Dockerfile
 
 ARG NB_USER="sagemaker-user"
 ARG NB_UID="1000"
