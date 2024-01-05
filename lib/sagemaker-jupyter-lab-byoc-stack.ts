@@ -59,7 +59,7 @@ export class SagemakerJupyterLabCdkStack extends Stack {
         cfnImageVersion.addDependency(cfnImage);
 
         // custom resource で app image config
-        const appImageConfig = new AwsCustomResource(this, `AppImageConfig${id}`, {
+        new AwsCustomResource(this, `AppImageConfig${id}`, {
             onCreate: {
                 service: "SageMaker",
                 action: "CreateAppImageConfig",
@@ -79,7 +79,7 @@ export class SagemakerJupyterLabCdkStack extends Stack {
         });
 
         // custom resource で update_domain
-        const domain = new AwsCustomResource(this, `Domain${id}`, {
+        new AwsCustomResource(this, `Domain${id}`, {
             onCreate: {
                 service: "SageMaker",
                 action: "UpdateDomain",
